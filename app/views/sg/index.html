@@ -1,0 +1,24 @@
+
+	
+	<table class="table">
+		<thead>
+			<th>Author</th>
+			<th>Last By</th>
+			<th>Title</th>
+			<th>Last Post</th>
+			
+
+		</thead>	
+		<tbody>	
+			<% @threads_arr.each { |thread| %>
+			<tr>
+				<td><%= thread[1] %></td>
+				<td><%= thread[2] %></td>
+				<td><a href='/sg/thread?tid=<%= thread[0] %>'><%= thread[3].html_safe %></a></td>
+				<td><%= thread[4] %></td>
+					
+			
+			</tr>
+			<% } %>
+		</tbody>
+	</table>

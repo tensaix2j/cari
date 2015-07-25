@@ -1,0 +1,20 @@
+
+	<table class="table">
+		<thead>
+			<th>Author</th>
+			<th>Date</th>
+			<th>Text</th>
+		</thead>	
+		<tbody>	
+			<% @posts_arr.each { |post| %>
+			<tr>
+				<td><%= post[1] %></td>
+				<td><%= post[2] %></td>
+				<td><%= post[3].html_safe %></td>
+				
+				
+			</tr>
+			<% } %>
+		</tbody>
+	</table>
+
