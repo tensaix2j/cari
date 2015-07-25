@@ -7,5 +7,5 @@ gem 'rails', '3.2.18'
 
 gem 'sqlite3'
 gem 'nokogiri'
-gem 'iconv'
+#gem 'iconv'
 
