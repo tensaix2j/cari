@@ -1,7 +1,8 @@
 
 
 class SgController < ApplicationController
-
+	
+	require 'open-uri'
 	#-----------	
 	def index
 
