@@ -89,6 +89,14 @@ class SgController < ApplicationController
 	end
 
 
+	#--------
+	def cleanup_post_text( post_text )
+
+		return post_text.gsub("img src=\"static","img src=\"http://cforum.cari.com.my/static").gsub("onmouseover=\"img_onmouseoverfunc(this)\"","").gsub("onload=\"thumbImg(this)\"","")
+		
+	end
+
+
 	#-----
 	def request_thread( tid, page , posts_arr ) 
 
@@ -109,7 +117,9 @@ class SgController < ApplicationController
 				post_id = post.attributes["id"].value.split("_")[1]
 				post_author = post.css(".favatar .authi a").text
 				post_date   = post.css("#authorposton#{ post_id }").text.gsub("发表于 ","")
-				post_text = post.css("#postmessage_#{post_id}").inner_html.gsub("img src=\"static","img src=\"http://cforum.cari.com.my/static")
+				post_text = cleanup_post_text( post.css("#postmessage_#{post_id}").inner_html ) 
+
+
 
 				@posts_arr << [ post_id , post_author, post_date, post_text ]
 			end	
