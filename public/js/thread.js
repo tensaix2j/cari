@@ -71,8 +71,8 @@
 				th.pageloaded[page_to_load] = 1;
 
 				$("#post_loadmore").html( "\
-						<div id='post_loadmorefirst'>More ...</div>\
-						<div id='post_loadmorelast'>... Last</div>\
+						<div id='post_loadmorefirst'>More From First ...</div>\
+						<div id='post_loadmorelast'>... More From Last</div>\
 					");
 
 				th.register_loadmore();
