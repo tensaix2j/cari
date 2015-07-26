@@ -8,8 +8,9 @@ class SgController < ApplicationController
 
 		@threads_arr = []
 		page 		= params[:page] || 1
+
 		(page...(page+2)).each { |pg|			
-			request_threadindex( page, @threads_arr )		
+			request_threadindex( pg, @threads_arr )		
 			@pageloaded = pg
 			if @threads_arr.count >= 30
 				break
@@ -63,16 +64,12 @@ class SgController < ApplicationController
 	def thread
 
 		@posts_arr = []
-		@pageloaded = 0
-
+		
 		if params[:tid] 
 
 			page 		= params[:page] || 1
 			request_thread( params[:tid] , page , @posts_arr )
-
 			@tid 		= params[:tid]
-			@pageloaded = page
-
 		end
 
 	end

@@ -27,6 +27,7 @@ body {
 
 .post_list li {
 	border-top: 1px solid #EDDDDD;
+
 }
 
 .post {
@@ -54,11 +55,37 @@ body {
 #post_loadmore {
 
 	text-align: center;
-	cursor: pointer;
 	font-size: 14px;
 	padding: 20px 10px;
-	
+	position: relative;
+	height: 60px;
 }
+
+#post_loadmorefirst {
+
+	position: absolute;
+	top:0px;
+	left:0px;
+	height: 60px;	
+	width: 150px;
+	padding-top: 20px;
+	cursor: pointer;
+	
+
+}
+
+#post_loadmorelast {
+	
+	position: absolute;
+	top:0px;
+	right:0px;
+	height: 60px;		
+	width: 150px;
+	padding-top: 20px;
+	cursor: pointer;
+	
+}	
+
 
 font {
 	margin-top:20px;

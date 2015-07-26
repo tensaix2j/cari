@@ -7,7 +7,7 @@
 			
 			<% @posts_arr.each { |post| %>
 				
-				<li>
+				<li class="li_pg_0">
 					<div class="post">
 						<div class="post_details"><b><%= post[1] %></b>, <b><%= post[2] %></b></div>
 						<div class="post_text"><%= post[3].html_safe %></div>
@@ -16,9 +16,10 @@
 				</li>
 			<% } %>
 
-			<% if @pageloaded < @maxpage %>
+			<% if @maxpage > 1 %>
 				<li id="post_loadmore">
-					More...
+					<div id="post_loadmorefirst">More ...</div>
+					<div id="post_loadmorelast">... Last</div>
 				</li>
 			<% end %>
 
@@ -32,7 +33,7 @@
 			th = new Thread();
 			th.tid = <%= @tid.to_json.html_safe %>;
 			th.maxpage = <%= @maxpage.to_json.html_safe %>;
-			th.pageloaded = <%= @pageloaded.to_json.html_safe %>;
+			th.pageloaded = [0];
 			th.init();
 		});
 	</script>

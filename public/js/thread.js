@@ -5,41 +5,106 @@
 		//--------------------------
 		this.init = function() {
 			
-			var th = this;
-			$("#post_loadmore").click( function() {
-					
-				var url  = "/sg/thread_json" ;
-				var params = { 
-					tid  : th.tid,
-					page : th.pageloaded + 1
-				};
-				
-				$("#post_loadmore").html( "<a class='cssload-loader'><span class='cssload-loader-inner'></span></a>");
-				
+			this.register_loadmore();
 
-				$.getJSON( url , params , function( data ) {
-
-					th.append_data( data );
-					th.pageloaded = th.pageloaded + 1;
-
-					$("#post_loadmore").html( "More...");
-					
-					if ( th.pageloaded >= th.maxpage ) {
-						$("#post_loadmore").hide();
-					}
-					
-				});
-
-
-			});
 		}
 
 
 		//------------
-		this.append_data = function( data ) {
+		this.register_loadmore = function() {
+			
+			var th = this;
+			$("#post_loadmorefirst").click( function() {
+				th.loadmorefirst_onclick();
+			});
+			$("#post_loadmorelast").click( function() {
+				th.loadmorelast_onclick();
+			});
+		}
+		
+
+
+		//----------------------------------------
+		this.loadmorefirst_onclick = function() {
+
+			var page_to_load = 0;
+			for ( var pg = 0 ; pg < this.maxpage ; pg++ ) {
+				if ( this.pageloaded[pg] == null ) {
+					page_to_load = pg;
+					break;
+				}
+			}
+			this.request_page( page_to_load );
+
+		}
+
+		//-------------
+		this.loadmorelast_onclick = function() {
+			
+			var page_to_load = this.maxpage - 1;
+			for ( var pg = this.maxpage - 1 ; pg > 0 ; pg-- ) {
+				if ( this.pageloaded[pg] == null ) {
+					page_to_load = pg;
+					break;
+				}
+			}
+			this.request_page( page_to_load );	
+		}
+
+
+
+		//---------------------
+		this.request_page = function( page_to_load ) {
+
+			var url  = "/sg/thread_json" ;
+			var params = { 
+				tid  : this.tid,
+				page : page_to_load + 1
+			};
+			
+			$("#post_loadmore").html( "<a class='cssload-loader'><span class='cssload-loader-inner'></span></a>");
+			
+			var th = this;
+			$.getJSON( url , params , function( data ) {
+
+				th.append_data( data , page_to_load );
+				th.pageloaded[page_to_load] = 1;
+
+				$("#post_loadmore").html( "\
+						<div id='post_loadmorefirst'>More ...</div>\
+						<div id='post_loadmorelast'>... Last</div>\
+					");
+
+				th.register_loadmore();
+
+				if ( th.all_pages_loaded() ) {
+					$("#post_loadmore").hide();
+				}
+			});
+		}
+
+
+		//-----------------
+		this.all_pages_loaded = function() {
+
+			for ( var i = 0 ; i < this.maxpage ; i++ ) {
+				if ( this.pageloaded[i]  == null) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+
+
+		//------------
+		this.append_data = function( data , page ) {
 
 			var ul = $("#post_list");
-			for ( var i = 0 ; i < data.length ; i++ ) {
+			var li_last_of_prev_page = $(".li_pg_" + (page - 1) + ":last");
+			var li_loadmore = $("#post_loadmore");
+
+			for ( var i = data.length - 1 ; i >= 0 ; i-- ) {
 
 				post_id , post_author, post_date, post_text
 
@@ -50,16 +115,19 @@
 				
 				
 				var li = sprintf("\
-					<li>\
+					<li class='li_pg_%s'>\
 						<div class='post'>\
 							<div class='post_details'><b>%s</b>, <b>%s</b></div>\
 							<div class='post_text'>%s</div>\
 						</a>\
-					</li>", post_author, post_date, post_text );
+					</li>", page  , post_author, post_date, post_text );
 					
-				ul.append( $(li) );
-				ul.find('#post_loadmore').appendTo(ul);
-				
+					
+				if ( li_last_of_prev_page.length == 1 ) {
+					$(li).insertAfter( li_last_of_prev_page );	
+				} else {
+					$(li).insertAfter( li_loadmore );	
+				}			
 			}
 		}
 	}
