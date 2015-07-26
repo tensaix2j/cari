@@ -6,14 +6,40 @@ class SgController < ApplicationController
 	#-----------	
 	def index
 
-		
-		url 	= "http://cforum.cari.com.my/forum.php?mod=forumdisplay&fid=159"
-		html 	= open(url).read
-		page = Nokogiri::HTML(html) 
-		threads = page.xpath('//tbody[starts-with(@id, "normalthread_")]')
+		@threads_arr = []
+		page 		= params[:page] || 1
+		(page...(page+2)).each { |pg|			
+			request_threadindex( page, @threads_arr )		
+			@pageloaded = pg
+			if @threads_arr.count >= 30
+				break
+			end
+		}
+	end
+
+
+	#----------
+	def index_json
 
 		@threads_arr = []
+		page = params[:page] || 1
+		request_threadindex( page,  @threads_arr )
+		render :text => @threads_arr.to_json
+	end
 
+
+
+
+
+	#--------------
+	def request_threadindex( page , threads_arr ) 
+
+		url 		= "http://cforum.cari.com.my/forum.php?mod=forumdisplay&fid=159&page=#{page}"
+		html 		= open(url).read
+		nkgrhtml 	= Nokogiri::HTML(html) 
+		threads 	= nkgrhtml.xpath('//tbody[starts-with(@id, "normalthread_")]')
+
+		
 		threads.each { |thread|
 			
 			entry_id 		= thread.attributes["id"].value.split("_")[1]
@@ -24,55 +50,73 @@ class SgController < ApplicationController
 			entry_lastpostuser = users[1].css("cite > a").text
 			entry_lastpostdate = users[1].css("em > a").text
 
-
-
-			@threads_arr << [ entry_id , entry_author, entry_lastpostuser, entry_title , entry_lastpostdate  ]
-
+			threads_arr << [ entry_id , entry_author, entry_lastpostuser, entry_title , entry_lastpostdate  ]
 		}
-
-
 	end
+
+
+
+
 
 	#-------
 	def thread
 
 		@posts_arr = []
-			
+		@pageloaded = 0
+
 		if params[:tid] 
 
-			page = params[:page] || 1
-			url 	= "http://cforum.cari.com.my/forum.php?mod=viewthread&tid=#{ params[:tid] }&page=#{page}"
-			html 	= open(url).read
-			page = Nokogiri::HTML(html) 
-			posts = page.xpath('//div[starts-with(@id, "post_")]')
+			page 		= params[:page] || 1
+			request_thread( params[:tid] , page , @posts_arr )
 
-			i = 0
-
-			posts.each { |post|
-
-				div_id = post.attributes["id"].value
-
-				if div_id[/post_[0-9]*$/]
-
-					post_id = post.attributes["id"].value.split("_")[1]
-					post_author = post.css(".favatar .authi a").text
-					post_date   = post.css("#authorposton#{ post_id }").text.gsub("发表于 ","")
-					post_text = post.css("#postmessage_#{post_id}").inner_html.gsub("img src=\"static","img src=\"http://cforum.cari.com.my/static")
-
-
-					p post_text if i == 4
-
-					@posts_arr << [ post_id , post_author, post_date, post_text ]
-				
-
-					i += 1
-				end	
-
-				
-			}
-
+			@tid 		= params[:tid]
+			@pageloaded = page
 
 		end
+
+	end
+
+
+	#----------
+	def thread_json
+
+		@posts_arr = []
+		page = params[:page] || 1
+
+		if params[:tid] 
+			request_thread( params[:tid], page,  @posts_arr )
+		end
+	
+		render :text => @posts_arr.to_json
+	end
+
+
+	#-----
+	def request_thread( tid, page , posts_arr ) 
+
+		url 		= "http://cforum.cari.com.my/forum.php?mod=viewthread&tid=#{ tid }&page=#{page}"
+		html 		= open(url).read
+		nkgrhtml 	= Nokogiri::HTML(html) 
+		posts 		= nkgrhtml.xpath('//div[starts-with(@id, "post_")]')
+
+		@maxpage 	= nkgrhtml.css("#ct #pgt label span").text[3...-1].to_i
+		
+
+		posts.each { |post|
+
+			div_id = post.attributes["id"].value
+
+			if div_id[/post_[0-9]*$/]
+
+				post_id = post.attributes["id"].value.split("_")[1]
+				post_author = post.css(".favatar .authi a").text
+				post_date   = post.css("#authorposton#{ post_id }").text.gsub("发表于 ","")
+				post_text = post.css("#postmessage_#{post_id}").inner_html.gsub("img src=\"static","img src=\"http://cforum.cari.com.my/static")
+
+				@posts_arr << [ post_id , post_author, post_date, post_text ]
+			end	
+		}
+
 
 	end
 

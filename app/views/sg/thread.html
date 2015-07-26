@@ -1,3 +1,9 @@
+	
+	<link rel="stylesheet" href="/css/thread.css" />	
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/sprintf-0.7-beta1.js"></script>
+	<script src="/js/thread.js"></script>
+
 
 	<table class="table">
 		<thead>
@@ -5,16 +11,36 @@
 			<th>Date</th>
 			<th>Text</th>
 		</thead>	
-		<tbody>	
+		<tbody id="thread_tbody">	
 			<% @posts_arr.each { |post| %>
 			<tr>
 				<td><%= post[1] %></td>
 				<td><%= post[2] %></td>
 				<td><%= post[3].html_safe %></td>
-				
-				
 			</tr>
 			<% } %>
 		</tbody>
+
+		<% if @pageloaded < @maxpage %>
+		<tfoot>
+			<tr>
+				<td colspan="3" style="text-align:center;">
+					<a class="morelink">More...</a>
+					<a class="cssload-loader" style="display:none;"><span class="cssload-loader-inner"></span></a>
+				</td>
+			</tr>
+		</tfoot>
+		<% end %>
+
+
 	</table>
 
+	<script>
+		$(document).ready(function() {
+			th = new Thread();
+			th.tid = <%= @tid.to_json.html_safe %>;
+			th.maxpage = <%= @maxpage.to_json.html_safe %>;
+			th.pageloaded = <%= @pageloaded.to_json.html_safe %>;
+			th.init();
+		});
+	</script>

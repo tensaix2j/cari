@@ -1,5 +1,10 @@
-
 	
+	
+	<link rel="stylesheet" href="/css/thread.css" />
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="/js/sprintf-0.7-beta1.js"></script>
+	<script src="/js/threadindex.js"></script>
+
 	<table class="table">
 		<thead>
 			<th>Author</th>
@@ -9,16 +14,33 @@
 			
 
 		</thead>	
-		<tbody>	
+		<tbody id="threadindex_tbody">	
 			<% @threads_arr.each { |thread| %>
 			<tr>
 				<td><%= thread[1] %></td>
 				<td><%= thread[2] %></td>
 				<td><a href='/sg/thread?tid=<%= thread[0] %>'><%= thread[3].html_safe %></a></td>
 				<td><%= thread[4] %></td>
-					
-			
 			</tr>
 			<% } %>
 		</tbody>
+
+		<tfoot>
+			<tr>
+				<td colspan="4" style="text-align:center;">
+					<a class="morelink">More...</a>
+					<a class="cssload-loader" style="display:none;"><span class="cssload-loader-inner"></span></a>
+				</td>
+
+			</tr>
+		</tfoot>
+
 	</table>
+
+	<script>
+		$(document).ready(function() {
+			ti = new Threadindex();
+			ti.pageloaded = <%= @pageloaded.to_json.html_safe %>;
+			ti.init();
+		});
+	</script>
