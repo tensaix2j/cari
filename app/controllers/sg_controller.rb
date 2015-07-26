@@ -49,8 +49,9 @@ class SgController < ApplicationController
 			entry_author = users[0].css("a").text 
 			entry_lastpostuser = users[1].css("cite > a").text
 			entry_lastpostdate = users[1].css("em > a").text
+			entry_postcount    = thread.css(".num a").text
 
-			threads_arr << [ entry_id , entry_author, entry_lastpostuser, entry_title , entry_lastpostdate  ]
+			threads_arr << [ entry_id , entry_author, entry_lastpostuser, entry_title , entry_lastpostdate , entry_postcount ]
 		}
 	end
 
@@ -100,7 +101,7 @@ class SgController < ApplicationController
 		posts 		= nkgrhtml.xpath('//div[starts-with(@id, "post_")]')
 
 		@maxpage 	= nkgrhtml.css("#ct #pgt label span").text[3...-1].to_i
-		
+
 
 		posts.each { |post|
 

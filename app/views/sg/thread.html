@@ -1,36 +1,28 @@
 	
-	<link rel="stylesheet" href="/css/thread.css" />	
-	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="/js/sprintf-0.7-beta1.js"></script>
-	<script src="/js/thread.js"></script>
+	<link rel="stylesheet" href="/css/thread.css?" />	
+	<script src="/js/thread.js?"></script>
 
 
-	<table class="table">
-		<thead>
-			<th>Author</th>
-			<th>Date</th>
-			<th>Text</th>
-		</thead>	
-		<tbody id="thread_tbody">	
+		<ul id="post_list" class="post_list">	
+			
 			<% @posts_arr.each { |post| %>
-			<tr>
-				<td><%= post[1] %></td>
-				<td><%= post[2] %></td>
-				<td><%= post[3].html_safe %></td>
-			</tr>
+				
+				<li>
+					<div class="post">
+						<div class="post_details"><b><%= post[1] %></b>, <b><%= post[2] %></b></div>
+						<div class="post_text"><%= post[3].html_safe %></div>
+					</div>	
+						
+				</li>
 			<% } %>
-		</tbody>
 
-		<% if @pageloaded < @maxpage %>
-		<tfoot>
-			<tr>
-				<td colspan="3" style="text-align:center;">
-					<a class="morelink">More...</a>
-					<a class="cssload-loader" style="display:none;"><span class="cssload-loader-inner"></span></a>
-				</td>
-			</tr>
-		</tfoot>
-		<% end %>
+			<% if @pageloaded < @maxpage %>
+				<li id="post_loadmore">
+					More...
+				</li>
+			<% end %>
+
+		</ul>
 
 
 	</table>
