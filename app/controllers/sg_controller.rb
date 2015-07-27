@@ -70,6 +70,9 @@ class SgController < ApplicationController
 			page 		= params[:page] || 1
 			request_thread( params[:tid] , page , @posts_arr )
 			@tid 		= params[:tid]
+		
+		else
+			redirect_to :action => :index
 		end
 
 	end
