@@ -113,7 +113,10 @@ class ApplicationController < ActionController::Base
 	#--------
 	def cleanup_post_text( post_text )
 
-		return post_text.gsub("src=\"static","src=\"http://cforum.cari.com.my/static").gsub("onmouseover=\"img_onmouseoverfunc(this)\"","").gsub("onload=\"thumbImg(this)\"","")
+		return post_text
+						.gsub("src=\"static","src=\"http://cforum.cari.com.my/static")
+						.gsub("onmouseover=\"img_onmouseoverfunc(this)\"","")
+						.gsub("onload=\"thumbImg(this)\"","")
 		
 	end
 
@@ -138,10 +141,17 @@ class ApplicationController < ActionController::Base
 				post_id = post.attributes["id"].value.split("_")[1]
 				post_author = post.css(".favatar .authi a").text
 				post_date   = post.css("#authorposton#{ post_id }").text.gsub("发表于 ","")
+
+				begin
+					post.css("ignore_js_op").each { | ignore_js_op|
+					
+						cari_img_src =  ignore_js_op.css("img")[0].attributes["file"].value
+						ignore_js_op.inner_html = "<img src=#{cari_img_src} />"
+					}
+				rescue
+				end
+				
 				post_text = cleanup_post_text( post.css("#postmessage_#{post_id}").inner_html ) 
-
-
-
 				@posts_arr << [ post_id , post_author, post_date, post_text ]
 			end	
 		}
