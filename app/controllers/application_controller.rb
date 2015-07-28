@@ -12,7 +12,14 @@ class ApplicationController < ActionController::Base
 			:sg => 159,
 			:forex => 89,
 			:movie => 20,
-			:politic => 562
+			:politic => 562,
+			:world => 564,
+			:office => 49,
+			:astrology => 288,
+			:buddhism => 87,
+			:gossip => 9,
+			:love => 10,
+			:bizarre => 142
 		}	
 			
 		return controller_to_fid[@controller.to_sym] || 159
@@ -150,7 +157,7 @@ class ApplicationController < ActionController::Base
 					}
 				rescue
 				end
-				
+
 				post_text = cleanup_post_text( post.css("#postmessage_#{post_id}").inner_html ) 
 				@posts_arr << [ post_id , post_author, post_date, post_text ]
 			end	
@@ -161,3 +168,10 @@ class ApplicationController < ActionController::Base
 
 
 end
+
+
+
+
+
+
+
