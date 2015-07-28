@@ -10,7 +10,7 @@
 				
 				<li>
 
-					<a href='/sg/thread?tid=<%= thread[0] %>' class="threadindex_a">
+					<a href='/<%= @controller %>/thread?tid=<%= thread[0] %>' class="threadindex_a">
 						
 						<div class="threadindex_title"><b><%= thread[3].html_safe %></b></div>
 						<div class="threadindex_details">By: <b><%= thread[1] %></b>, Last: <b><%= thread[2] %></b>, <%= thread[4] %>, <%= thread[5] %> replies.</div>
@@ -31,6 +31,7 @@
 	<script>
 		$(document).ready(function() {
 			ti = new Threadindex();
+			ti.controller =  "<%= @controller %>";
 			ti.pageloaded = <%= @pageloaded.to_json.html_safe %>;
 			ti.init();
 		});

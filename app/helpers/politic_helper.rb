@@ -1,0 +1,2 @@
+module PoliticHelper
+end

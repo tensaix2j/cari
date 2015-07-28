@@ -31,8 +31,9 @@
 	<script>
 		$(document).ready(function() {
 			th = new Thread();
-			th.tid = <%= @tid.to_json.html_safe %>;
-			th.maxpage = <%= @maxpage.to_json.html_safe %>;
+			th.controller =  "<%= @controller %>";
+			th.tid 		= <%= @tid.to_json.html_safe %>;
+			th.maxpage 	= <%= @maxpage.to_json.html_safe %>;
 			th.pageloaded = [0];
 			th.init();
 		});

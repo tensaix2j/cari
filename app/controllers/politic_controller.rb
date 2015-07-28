@@ -1,0 +1,2 @@
+class PoliticController < ApplicationController
+end

@@ -56,7 +56,7 @@
 		//---------------------
 		this.request_page = function( page_to_load ) {
 
-			var url  = "/sg/thread_json" ;
+			var url  =  sprintf("/%s/thread_json", this.controller ) ;
 			var params = { 
 				tid  : this.tid,
 				page : page_to_load + 1

@@ -9,7 +9,7 @@
 			var ti = this;
 			$("#threadindex_loadmore").click( function() {
 				
-				var url  = "/sg/index_json" ;
+				var url  = sprintf("/%s/index_json", ti.controller ) ;
 				var params = { 
 					page : ti.pageloaded + 1
 				};
@@ -46,11 +46,12 @@
 				
 				var li = sprintf( "\
 					<li>\
-						<a href='/sg/thread?tid=%s' class='threadindex_a'>\
+						<a href='/%s/thread?tid=%s' class='threadindex_a'>\
 							<div class='threadindex_title'><b>%s</b></div>\
 							<div class='threadindex_details'>By: <b>%s</b>, Last: <b>%s</b>, %s, %s replies.</div>\
 						</a>\
 					</li>",
+				 this.controller,
 				 tid, title, author, lastpostby , lastpostdate , replies );
 					
 				ul.append( $(li) );
