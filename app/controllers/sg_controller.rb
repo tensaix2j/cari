@@ -36,3 +36,16 @@ end
 class BizarreController < ApplicationController
 	
 end
+
+class StockController < ApplicationController	
+end
+
+class IphoneController < ApplicationController	
+end
+class SamsungController < ApplicationController	
+end
+class DeveloperController < ApplicationController	
+end
+class GamedevController < ApplicationController	
+end
+

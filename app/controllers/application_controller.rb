@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
 
 		@controller = params[:controller]
 
-		controller_to_fid = {
+		@controller_to_fid = {
 			:sg => 159,
 			:forex => 89,
 			:movie => 20,
@@ -19,10 +19,15 @@ class ApplicationController < ActionController::Base
 			:buddhism => 87,
 			:gossip => 9,
 			:love => 10,
-			:bizarre => 142
+			:bizarre => 142,
+			:stock => 537,
+			:iphone => 644,
+			:samsung => 662,
+			:developer => 113,
+			:gamedev => 334
 		}	
-			
-		return controller_to_fid[@controller.to_sym] || 159
+				
+		return @controller_to_fid[@controller.to_sym] || 159
 
 	end
 
