@@ -2,19 +2,33 @@
 
 function Fx() {
 
+	this.request_queue = [];
+
 	this.init = function() {
 
-		this.request_data();
+		this.request_queue.push("/fx/oanda");
+		this.request_queue.push("/fx/btce");
+		this.process_request_queue();
+
+	}
+
+	//-------------
+	this.process_request_queue = function( ) {
+
+		if ( this.request_queue.length > 0 ) {
+			var url = this.request_queue.shift();
+			this.request_data( url );
+		}
 	}
 
 	//---------------------
-	this.request_data = function( ) {
+	this.request_data = function( url ) {
 
 		var fx = this;
-		var url = "/fx/oanda"
 		var params = {}
 
 		$("#threadindex_loadmore").html( "<a class='cssload-loader'><span class='cssload-loader-inner'></span></a>");
+		$("#threadindex_loadmore").show();
 
 		$.getJSON( url , params , function( data ) {
 
@@ -23,7 +37,10 @@ function Fx() {
 			} else {
 				fx.append_data( data );
 			}
+		
 			$("#threadindex_loadmore").hide();
+			fx.process_request_queue();
+
 		});
 
 
@@ -69,6 +86,7 @@ function Fx() {
 				 fx_pair,  bid , ask );
 					
 			ul.append( $(li) );
+			ul.find('#threadindex_loadmore').appendTo(ul);
 		}
 	}
 
