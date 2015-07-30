@@ -67,7 +67,9 @@ class ApplicationController < ActionController::Base
 	def request_threadindex( fid, page , threads_arr ) 
 
 		url 		= "http://cforum.cari.com.my/forum.php?mod=forumdisplay&fid=#{ fid }&page=#{ page }"
-		html 		= open(url).read
+		html 		= ""
+		open_url_read( url, html )		
+		
 		nkgrhtml 	= Nokogiri::HTML(html) 
 		threads 	= nkgrhtml.xpath('//tbody[starts-with(@id, "normalthread_")]')
 
