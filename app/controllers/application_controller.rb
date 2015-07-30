@@ -132,12 +132,29 @@ class ApplicationController < ActionController::Base
 		
 	end
 
+	#-------------
+	def open_url_read( url , html )
+
+		open(url) { |f|
+			while !f.eof
+				begin 
+					html << f.gets.chomp()
+				rescue Exception => ex
+					puts "#{ ex.to_s }"
+				end
+			end
+		}
+	end
+
 
 	#-----
 	def request_thread( tid, page , posts_arr ) 
 
 		url 		= "http://cforum.cari.com.my/forum.php?mod=viewthread&tid=#{ tid }&page=#{page}"
-		html 		= open(url).read
+			
+		html = ""
+		open_url_read( url, html )		
+		
 		nkgrhtml 	= Nokogiri::HTML(html) 
 		posts 		= nkgrhtml.xpath('//div[starts-with(@id, "post_")]')
 
