@@ -5,6 +5,12 @@
 
 		<ul id="post_list" class="post_list">	
 			
+			<li id="post_back">
+				<a href="/<%= @controller %>" class="threadindex_a">
+					<%= @controller.upcase %> Home
+				</a>
+			</li>	
+
 			<% @posts_arr.each { |post| %>
 				
 				<li class="li_pg_0">

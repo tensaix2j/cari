@@ -74,6 +74,15 @@ body {
 	background-color: #eee;
 }
 
+#post_back {
+
+	text-align: left;
+	font-size: 14px;
+	padding: 20px 10px;
+	position: relative;
+	height: 60px;
+}
+
 
 #post_loadmorefirst {
 
