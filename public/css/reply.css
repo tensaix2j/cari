@@ -1,7 +1,10 @@
 
 	 
-	#cari_iframe
-	{
+	#cari_iframe {
 		width: 100% ; 
 	    height: 700px;
+	}
+
+	.fa-arrow-left {
+		font-size: 24px;
 	}

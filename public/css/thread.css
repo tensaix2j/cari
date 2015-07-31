@@ -68,21 +68,42 @@ body {
 	padding: 20px 10px;
 	position: relative;
 	height: 60px;
+	background-color: #eee;
+	color:white;
+	font-weight: bold;
+
 }
 
 #post_reply a:hover {
 	background-color: #eee;
 }
 
+
+
 #post_back {
 
-	text-align: left;
+	text-align: center;
 	font-size: 14px;
 	padding: 20px 10px;
 	position: relative;
 	height: 60px;
+	background-color: #85aad5;
+	color:white;
+	font-weight: bold;
+}
+#post_back a { 
+	color:white;
 }
 
+.post_back_icon {
+	position: absolute;
+	left: 10px;
+	top: 14px;
+}
+
+.fa-home {
+	font-size: 28px;
+}
 
 #post_loadmorefirst {
 

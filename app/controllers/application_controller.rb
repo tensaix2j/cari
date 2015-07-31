@@ -161,7 +161,8 @@ class ApplicationController < ActionController::Base
 		posts 		= nkgrhtml.xpath('//div[starts-with(@id, "post_")]')
 
 		@maxpage 	= nkgrhtml.css("#ct #pgt label span").text[3...-1].to_i
-
+		@thread_title = nkgrhtml.css("#thread_subject").text 
+		
 
 		posts.each { |post|
 
