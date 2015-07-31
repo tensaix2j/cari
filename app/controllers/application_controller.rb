@@ -200,6 +200,23 @@ class ApplicationController < ActionController::Base
 		}
 		return kv.join("&") 
 	end
+
+
+	#-------------------
+	def reply
+
+		if params[:tid] 
+
+			fid 	= controller_to_fid()
+			@tid = params[:tid]
+					
+			render :template => "/sg/reply"
+		
+		else
+			render :text => ""
+		end
+
+	end
 end
 
 
