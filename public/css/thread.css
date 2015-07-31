@@ -78,6 +78,10 @@ body {
 	background-color: #eee;
 }
 
+#post_reply a {
+	color:black;
+}
+
 
 
 #post_back {
@@ -87,22 +91,21 @@ body {
 	padding: 20px 10px;
 	position: relative;
 	height: 60px;
-	background-color: #85aad5;
-	color:white;
 	font-weight: bold;
+	background-color: #eee;
 }
 #post_back a { 
-	color:white;
+	color:black;
 }
 
 .post_back_icon {
 	position: absolute;
-	left: 10px;
-	top: 14px;
+	left: 14px;
+	top: 18px;
 }
 
 .fa-home {
-	font-size: 28px;
+	font-size: 20px;
 }
 
 #post_loadmorefirst {
