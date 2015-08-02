@@ -174,17 +174,30 @@ class ApplicationController < ActionController::Base
 				post_author = post.css(".favatar .authi a").text
 				post_date   = post.css("#authorposton#{ post_id }").text.gsub("发表于 ","")
 
+				cari_imgs = []
+
 				begin
 					post.css("ignore_js_op").each { | ignore_js_op|
-					
-						cari_img_src =  ignore_js_op.css("img")[0].attributes["file"].value
-						ignore_js_op.inner_html = "<img src=#{cari_img_src} />"
+						
+						cari_img_src = ""
+						if ignore_js_op.css("img") && ignore_js_op.css("img")[0].attributes["file"]
+							cari_img_src =  ignore_js_op.css("img")[0].attributes["file"].value 
+						elsif ignore_js_op.css(".savephotop img") && ignore_js_op.css(".savephotop img")[0].attributes["file"]
+							cari_img_src =  ignore_js_op.css(".savephotop img")[0].attributes["file"].value
+						end
+						cari_imgs << "<img src=#{cari_img_src} />"
 					}
-				rescue
+				rescue Exception => ex
+					puts "Error #{ ex.to_s }"
 				end
 
 				post_text = cleanup_post_text( post.css("#postmessage_#{post_id}").inner_html ) 
+				post_text += "<div>#{ cari_imgs.join("") }</div>" if cari_imgs.length > 0
+				
 				@posts_arr << [ post_id , post_author, post_date, post_text ]
+				
+				
+
 			end	
 		}
 
