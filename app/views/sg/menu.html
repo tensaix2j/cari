@@ -1,0 +1,12 @@
+
+<link rel="stylesheet" href="/css/threadindex.css" />
+
+<ul id="fx_list" class="threadindex_list">	
+	<% @controller_to_fid.keys.each { |key| %>
+		<li>
+			<a href='/<%= key %>' class='threadindex_a'>
+				<%= key %>
+			</a>
+		</li>
+	<% } %>
+</ul>
