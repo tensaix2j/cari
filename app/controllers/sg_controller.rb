@@ -26,6 +26,26 @@ class SgController < ApplicationController
 			:developer => 113,
 			:gamedev => 334,
 			:entrepreneur => 242
+		}
+
+		@controller_to_label = {
+			:sg => "新加坡",
+			:forex => "外匯",
+			:movie => "影視",
+			:politic => "國內政治",
+			:world => "世界",
+			:office => "辦公",
+			:astrology => "玄學",
+			:buddhism => "佛學",
+			:gossip => "吱喳",
+			:love => "愛情",
+			:bizarre => "不可思議",
+			:stock => "股票",
+			:iphone => "iPhone",
+			:samsung => "Samsung",
+			:developer => "軟件開發",
+			:gamedev => "遊戲開發",
+			:entrepreneur => "創業"
 		}	
 
 		return @controller_to_fid[@controller.to_sym] || 159
@@ -38,7 +58,7 @@ class SgController < ApplicationController
 
 		a,@controller,@action = request.path.split("/")
 		@action = "index" if @action == nil
-		
+
 		begin
 			method( @action ).call()
 		rescue Exception=>ex 

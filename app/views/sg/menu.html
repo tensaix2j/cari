@@ -5,7 +5,7 @@
 	<% @controller_to_fid.keys.each { |key| %>
 		<li>
 			<a href='/<%= key %>' class='threadindex_a'>
-				<%= key %>
+				<%= @controller_to_label[ key ] || key %>
 			</a>
 		</li>
 	<% } %>
