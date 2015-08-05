@@ -102,12 +102,12 @@ class FxController < ApplicationController
 		response_text = {}
 		begin 
 			data = []
-			cryptsy = JSON.parse( open("https://www.cryptsy.com/json.php?file=ajaxtradehistory_462.json").read )
+			cryptsy = JSON.parse( open("https://www.cryptsy.com/orders/ajaxorderslist2/462").read )
 				
 			obj = {}
 			obj["instrument"] = "CLAM_BTC"
-			obj["ask"] = cryptsy["aaData"][0][2]
-			obj["bid"] = cryptsy["aaData"][1][2]
+			obj["ask"] = cryptsy["sell"].first[0]
+			obj["bid"] = cryptsy["buy"].last[0]
 			data << obj
 
 			response_text = { :status => 0 , :statusmsg => "OK", :prices => data }
