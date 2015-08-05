@@ -55,8 +55,8 @@ class FxController < ApplicationController
 				ticker_json = Btce::Ticker.new(instrument).json 
 				obj = {}
 				obj["instrument"] = instrument.upcase
-				obj["bid" ] = ticker_json[instrument]["buy"]
-				obj["ask" ] = ticker_json[instrument]["sell"]
+				obj["bid" ] = ticker_json[instrument]["sell"]
+				obj["ask" ] = ticker_json[instrument]["buy"]
 				data << obj	
 			}
 				
@@ -106,8 +106,8 @@ class FxController < ApplicationController
 				
 			obj = {}
 			obj["instrument"] = "CLAM_BTC"
-			obj["bid"] = cryptsy["aaData"][0][2]
-			obj["ask"] = cryptsy["aaData"][1][2]
+			obj["ask"] = cryptsy["aaData"][0][2]
+			obj["bid"] = cryptsy["aaData"][1][2]
 			data << obj
 
 			response_text = { :status => 0 , :statusmsg => "OK", :prices => data }
