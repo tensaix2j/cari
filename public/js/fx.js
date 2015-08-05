@@ -6,10 +6,10 @@ function Fx() {
 
 	this.init = function() {
 
-		this.request_queue.push("/fx/btce");
+		this.request_queue.push("/fx/oanda");
 		this.request_queue.push("/fx/fybsg");
 		this.request_queue.push("/fx/cryptsy");
-		this.request_queue.push("/fx/oanda");
+		this.request_queue.push("/fx/btce");
 		
 		
 		this.process_request_queue();
