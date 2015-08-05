@@ -1,7 +1,6 @@
 class FxController < ApplicationController	
 
 	
-
 	#-----------------------
 	def index
 		
@@ -51,7 +50,7 @@ class FxController < ApplicationController
 		response_text = {}
 		begin
 			data = []
-			["btc_usd", "ltc_usd"].each { |instrument|
+			["btc_usd", "ltc_usd" , "ltc_btc" , "nmc_btc" ].each { |instrument|
 				
 				ticker_json = Btce::Ticker.new(instrument).json 
 				obj = {}
@@ -71,6 +70,53 @@ class FxController < ApplicationController
 		render :text => response_text.to_json
 		
 
+	end
+
+
+	#---------------
+	def fybsg 
+
+		response_text = {}
+		
+		begin
+			data = []
+			fybsg = JSON.parse( open("https://www.fybsg.com/api/SGD/tickerdetailed.json" ).read )
+			obj = {}
+			obj["instrument"] = "BTC_SGD"
+			obj["bid" ] = fybsg["bid"]
+			obj["ask" ] = fybsg["ask"]
+			data << obj	
+			response_text = { :status => 0 , :statusmsg => "OK", :prices => data }
+
+		rescue Exception => ex 
+
+			response_text = {:status => -1 , :statusmsg => ex.to_s }
+		end		
+		render :text => response_text.to_json
+		
+	end
+
+	#--------
+	def cryptsy
+
+		response_text = {}
+		begin 
+			data = []
+			cryptsy = JSON.parse( open("https://www.cryptsy.com/json.php?file=ajaxtradehistory_462.json").read )
+				
+			obj = {}
+			obj["instrument"] = "CLAM_BTC"
+			obj["bid"] = cryptsy["aaData"][0][2]
+			obj["ask"] = cryptsy["aaData"][1][2]
+			data << obj
+
+			response_text = { :status => 0 , :statusmsg => "OK", :prices => data }
+
+		rescue Exception => ex 
+			response_text = {:status => -1 , :statusmsg => ex.to_s }
+		end
+
+		render :text => response_text.to_json
 	end
 end
 
