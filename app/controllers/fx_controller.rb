@@ -1,5 +1,6 @@
 class FxController < ApplicationController	
 
+	require 'open-uri'
 	
 	#-----------------------
 	def index
@@ -117,6 +118,43 @@ class FxController < ApplicationController
 		end
 
 		render :text => response_text.to_json
+	end
+
+
+	#----------------
+	def sgx
+
+		response_text = {}
+		begin 
+			data = []
+
+			html = open("http://sgx.com/JsonRead/JsonData?qryId=RStock").read
+			html.gsub!("{}&& ","").gsub!(/([a-zA-Z]+[0-9_]*):/,'"\1":').gsub!("'","\"")
+			
+
+			sgx = JSON.parse( html )
+			counters = ["Duty Free Intl", "Mencast", "Asian Pay Tv Tr", "OCBC Bank", "Sheng Siong", "Second Chance", "M1", "SingTel", "StarHub", "Old Chang Kee", "Keppel Corp", "UMS", "Vard", "Global Logistic", "SingPost", "Nam Cheong", "Religare HTrust", "Spackman", "POSH", "IHC", "Ezion", "SIA", "DBS", "Frasers Cpt", "PNE Industries"];
+			
+
+
+			sgx["items"].each { |counter_obj|
+
+				if counters.index( counter_obj["N"] )
+					
+					obj = {}
+					obj["instrument"] = counter_obj["N"]
+					obj["bid" ] = counter_obj["B"]
+					obj["ask" ] = counter_obj["S"]
+					data << obj	
+				end	
+			}
+			response_text = { :status => 0 , :statusmsg => "OK", :prices => data }
+
+		rescue Exception => ex 
+			response_text = {:status => -1 , :statusmsg => ex.to_s }
+		end
+
+		render :text => response_text.to_json	
 	end
 end
 

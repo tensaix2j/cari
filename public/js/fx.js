@@ -10,6 +10,7 @@ function Fx() {
 		this.request_queue.push("/fx/fybsg");
 		this.request_queue.push("/fx/cryptsy");
 		this.request_queue.push("/fx/btce");
+		this.request_queue.push("/fx/sgx");
 		
 		
 		this.process_request_queue();
