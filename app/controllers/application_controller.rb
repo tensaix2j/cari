@@ -11,6 +11,28 @@ class ApplicationController < ActionController::Base
 		return kv.join("&") 
 	end
 
+	#-------------
+	def open_url_read( url , html )
+
+		begin 
+			open(url) { |f|
+				while !f.eof
+					begin 
+						html << f.gets.chomp()
+					rescue Exception => ex
+						puts "#{ ex.to_s }"
+					end
+				end
+			}
+		
+		rescue Exception => ex
+			puts "#{ ex.to_s }"
+		end
+
+	end
+
+
+
 end
 
 

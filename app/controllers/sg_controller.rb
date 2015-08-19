@@ -112,8 +112,8 @@ class SgController < ApplicationController
 
 		url 		= "http://cforum.cari.com.my/forum.php?mod=forumdisplay&fid=#{ fid }&page=#{ page }"
 		html 		= ""
-		open_url_read( url, html )		
-		
+		open_url_read( url, html )
+			
 		nkgrhtml 	= Nokogiri::HTML(html) 
 		threads 	= nkgrhtml.xpath('//tbody[starts-with(@id, "normalthread_")]')
 
@@ -178,19 +178,7 @@ class SgController < ApplicationController
 		
 	end
 
-	#-------------
-	def open_url_read( url , html )
-
-		open(url) { |f|
-			while !f.eof
-				begin 
-					html << f.gets.chomp()
-				rescue Exception => ex
-					puts "#{ ex.to_s }"
-				end
-			end
-		}
-	end
+	
 
 
 	#-----
