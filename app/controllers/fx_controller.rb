@@ -21,7 +21,7 @@ class FxController < ApplicationController
 			oanda_account = YAML.load_file(oanda_yml)[Rails.env]
 			params = { 
 				:accountId 	=> oanda_account["id"].to_s ,
-				:instruments => "EUR_USD,AUD_USD,GBP_USD,USD_CAD,USD_JPY,AUD_JPY,EUR_JPY,USD_SGD,AUD_SGD,XAU_USD"
+				:instruments => "EUR_USD,AUD_USD,GBP_USD,USD_CAD,USD_JPY,AUD_JPY,NZD_USD,EUR_JPY,USD_SGD,AUD_SGD,XAU_USD"
 			}
 
 			begin 
